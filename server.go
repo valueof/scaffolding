@@ -109,6 +109,9 @@ func main() {
 	router := http.NewServeMux()
 	router.HandleFunc("/", index)
 
+	static := http.FileServer(http.Dir("static"))
+	router.Handle("/static/", http.StripPrefix("/static/", static))
+
 	s := &http.Server{
 		ReadTimeout:  5 * time.Second,
 		WriteTimeout: 5 * time.Second,
